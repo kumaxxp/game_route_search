@@ -1,0 +1,10 @@
+code,terrain,base_cost,ascent_cost,descent_cost,diagonal_factor,passable,notes
+.,plain,1.0,2.0,0.5,1.414,true,Standard movement
+~,shallow_water,3.0,1.0,1.0,1.414,true,Movement speed reduced
+F,forest,2.0,1.5,1.0,1.414,true,Vision restriction and increased cost
+^,cliff,5.0,10.0,2.0,1.414,true,Steep elevation change
+s,sand,2.5,2.0,1.5,1.414,true,Unstable footing
+=,paved,0.8,1.5,0.4,1.414,true,Fastest movement
+#,wall,0.0,0.0,0.0,0.0,false,Impassable
+S,start,1.0,2.0,0.5,1.414,true,Start position (treated as plain)
+G,goal,1.0,2.0,0.5,1.414,true,Goal position (treated as plain)
