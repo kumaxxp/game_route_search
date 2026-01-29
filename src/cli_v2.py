@@ -79,6 +79,13 @@ def parse_args(args: Sequence[str]) -> argparse.Namespace:
         help='Display detailed metrics (cost, nodes expanded, time)',
     )
 
+    parser.add_argument(
+        '--max-cost-cap',
+        type=float,
+        default=255.0,
+        help='Maximum cost cap for saturation (default: 255)',
+    )
+
     return parser.parse_args(args)
 
 
@@ -209,7 +216,10 @@ def run(args: argparse.Namespace) -> int:
         print(f"Error: Invalid map: {e}", file=sys.stderr)
         return 1
 
-    cost_config = CostConfig(priority_weight=args.priority_weight)
+    cost_config = CostConfig(
+        priority_weight=args.priority_weight,
+        max_cost_cap=args.max_cost_cap,
+    )
 
     if args.compare:
         return run_compare_mode(game_map, args, cost_config)

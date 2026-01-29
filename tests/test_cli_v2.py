@@ -60,6 +60,16 @@ class TestParseArgs:
         args = parse_args(["test_map.txt", "--metrics"])
         assert args.metrics is True
 
+    def test_max_cost_cap_default(self) -> None:
+        """Default max-cost-cap should be 255."""
+        args = parse_args(["test_map.txt"])
+        assert args.max_cost_cap == 255.0
+
+    def test_max_cost_cap_custom(self) -> None:
+        """Custom max-cost-cap should be parsed."""
+        args = parse_args(["test_map.txt", "--max-cost-cap", "128"])
+        assert args.max_cost_cap == 128.0
+
 
 class TestLoadMap:
     """Tests for map loading."""

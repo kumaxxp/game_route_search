@@ -4,12 +4,18 @@ from dataclasses import dataclass
 from src.constants.terrain_costs import get_terrain_cost
 from src.map_loader_v2 import MultiLayerMap
 
+# Maximum cost cap (SPECIFICATION.md §最終査察追補)
+# Prevents integer overflow and ensures bounded edge weights.
+# C_max = 255 per specification.
+MAX_COST_CAP: int = 255
+
 
 @dataclass(frozen=True)
 class CostConfig:
     """Configuration for cost calculation."""
 
     priority_weight: float = 0.0
+    max_cost_cap: float = MAX_COST_CAP
 
 
 def is_diagonal_move(u: tuple[int, int], v: tuple[int, int]) -> bool:
@@ -89,6 +95,11 @@ def calculate_edge_cost(
     priority_component = cfg.priority_weight * priority_v
 
     total_cost = base_component + ascent_component + descent_component + priority_component
+
+    # Apply cost saturation (SPECIFICATION.md §最終査察追補)
+    # c̃(u,v) = min(c(u,v), C_max) where C_max = 255
+    if total_cost > cfg.max_cost_cap:
+        return cfg.max_cost_cap
 
     return total_cost
 
